@@ -25,10 +25,11 @@ public class Lab2_P4_Spiral implements Runnable
 	
     public void expand(int x, int y) 
     {
-    	int stripCt, stripLength = y;
+    	int stripCt, stripTotal = y;
+    	int pendingLength = x;
     	long tStart, tDuration;
     	
-    	for(stripCt = 1; stripCt < stripLength; stripCt++)
+    	for(stripCt = 1; stripCt < stripTotal; stripCt++)
     	{
     		tStart = System.currentTimeMillis();
     		tDuration = 0;
@@ -47,8 +48,30 @@ public class Lab2_P4_Spiral implements Runnable
     	}
     }
     
-    public void shrink(int x)
+    public void shrink(int x, int y)
     {
+    	int stripCt, stripTotal = y;
+    	int pendingLength = x;
+    	long tStart, tDuration;
+
+    	for(stripCt = stripTotal; stripCt > 1; stripCt--)
+    	{
+    		tStart = System.currentTimeMillis();
+    		tDuration = 0;
+    		
+    		while(tDuration < stripCt * 100)
+    		{
+    			robot.moveMotor(100,100);
+    			if(Thread.currentThread().isInterrupted())
+    			{
+    				robot.moveMotors(0,0);
+    				recover(stripCt, robot.distance());
+    			}
+    			tDuration = System.currentTimeMillis() - tStart;
+    		}
+    		
+    	}
+    	
     	
     }
     
