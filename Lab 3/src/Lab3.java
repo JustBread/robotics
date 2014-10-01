@@ -14,7 +14,11 @@ public class Lab3
         //Data Structures
         int guiMap[][];
         int costMap[][];
+        
         int goal [] = { 1 , 3 };
+        int location [];
+        String direction;
+        
         
         //Read Map using MapGUI
         guiMap = myMap.getMap();
@@ -31,6 +35,9 @@ public class Lab3
         updateText(guiMap, myMap);
         
         //Move Robot
+        location = myMap.getRobotLocation();
+        direction = myMap.getRobotDirection();
+        System.out.println(location[0] + " " + location[1]);
         
         
         myRobot.waitForPlay();
