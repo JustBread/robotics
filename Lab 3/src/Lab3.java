@@ -12,51 +12,25 @@ public class Lab3
         MapGUI myMap = new MapGUI("maze.txt");
         
         //Data Structures
-        int oldMap[][];
-        int newMap[][] = new int[6][7];
-        int goal [] = { 2 , 4 };
+        int guiMap[][];
+        int costMap[][];
+        int goal [] = { 1 , 3 };
         
-        //Get Current Map
-        oldMap = myMap.getMap();
-        int k = 0, l = 0;
+        //Read Map using MapGUI
+        guiMap = myMap.getMap();
+        printMap(guiMap);
         
-        //Out of Bounds
-        for(int i = 0; i < newMap.length; i++)
-        {
-        	Arrays.fill(newMap[i], 1);
-        }
+        //Fix Orientation
+        costMap = FreshLib.flipMap(guiMap);
+        printMap(costMap);
         
-        //Fix Map Orientation for Analysis
-        for(int i = oldMap.length - 1; i >= 0; i--)
-        {
-        	l = 0;
-        	for(int j = 0; j < oldMap[0].length; j++)
-        	{
-        		System.out.printf("%d", oldMap[i][j]);
-        		if(k == 3 && l == 1)
-        		{
-        			newMap[l + 1][k + 1] = 2;
-        		}
-        		else
-        			newMap[k + 1][l + 1] = oldMap[i][j];
-        		l++;
-        	}
-        	k++;
-        	System.out.println();
-        }
+        //Get Final Cost Map
+        costMap = FreshLib.calculateFinal(costMap, goal);
+        printMap(costMap);
+        guiMap = FreshLib.flipMap(costMap);
+        updateText(guiMap, myMap);
         
-        
-        
-        printMap(newMap);
-        
-        //Wavefront
-        for(int i = 0; i < newMap.length; i++)
-        {
-        	for(int j = 0; j < newMap[0].length ; j++)
-        	{
-        		
-        	}
-        }
+        //Move Robot
         
         
         myRobot.waitForPlay();
@@ -82,5 +56,17 @@ public class Lab3
         }
         return;
     }
+    
+    public static void updateText(int[][] x, MapGUI m)
+    {
+    	for(int i = 0; i < x.length; i++)
+    	{
+    		for(int j = 0; j < x[0].length; j++)
+    		{
+    			m.setText(Integer.toString(x[i][j]), i, j);
+    		}
+    	}
+    }
+
     
 }
